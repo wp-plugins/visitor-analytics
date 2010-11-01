@@ -3,7 +3,7 @@
 Plugin Name: Visitor Analytics
 Plugin URI: http://ziming.org/dev/visitor-analytics
 Description: Visitor Depth Analyse and Interaction.
-Version: 1.0.0
+Version: 1.0.1
 Author: Suny Tse
 Author URI: http://ziming.org
  */
