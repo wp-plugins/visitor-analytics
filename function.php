@@ -423,8 +423,8 @@ function va_get_analytics($results){
 				$dateTime1->setTimezone(new DateTimeZone($timezone));
 				$dateTime2->setTimezone(new DateTimeZone($timezone));
 				
-				$date1 =  strtotime($dateTime1->format("Y-m-d 0:0:0"));
-				$date1_1 =  strtotime($dateTime1->format("Y-m-d H:i:s"));
+				//$date1 =  strtotime($dateTime1->format("Y-m-d 0:0:0"));
+				$date1 =  strtotime($dateTime1->format("Y-m-d H:i:s"));
 				$date2 =  strtotime($dateTime2->format("Y-m-d H:i:s"));
 
 				$diff_y = floor(($date1 - $date2)/(60*60*24*365));
@@ -439,7 +439,7 @@ function va_get_analytics($results){
 							 		$diff_d = floor(($date1 - $date2)/(60*60*24));
 									if($diff_d < 30){
 										$day_stat[$diff_d] +=1;
-										$diff_h = floor(($date1_1 - $date2)/(60*60)); //latest hour , $hour_stat[0]
+										$diff_h = floor(($date1 - $date2)/(60*60)); //latest hour , $hour_stat[0]
 										if($diff_h < 24){
 											 $hour_stat[$diff_h] +=1; //here i only record the latest 24 hours
 										}
