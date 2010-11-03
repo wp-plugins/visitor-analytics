@@ -35,7 +35,7 @@ function make_table($results,$results_count,$page_no=1){
 		   }else{
 		   	echo '<td><a target="_blank" href="'.$r->referer.'" title="'.$r->referer.'">'.get_referer_domain($r->referer).'</a></td>';
 		   }
-		   $cuva_ip_address='http://images.ideashot.com/special_use/ip/ip.php?action=getip&ip_url='.$r->ip;
+		   $cuva_ip_address='http://images.ziming.org/special_use/ip/ip.php?action=getip&ip_url='.$r->ip;
 		   echo '<td><a title="'.$cuva_ip_address.'" href="'.VA_ADMIN_URL.'&va_filter=ip&va_ip='.$r->ip.'">'.$r->ip.'</a><a href="'.$cuva_ip_address.'" target="_blank" ><img src="'.VA_BASEFOLDER.'img/questionmark-icon.gif"/></a></td>';
 		   echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->cookie.'" title="'.$va_lang['title_cookie'].'">'.$r->cookie.'</a></td>';
 		   echo '<td>';
