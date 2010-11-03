@@ -41,7 +41,7 @@ function data_analytics(){
 	$sql='SELECT * FROM (
 						SELECT  cookie , COUNT( cookie ) AS cookie_count, max(time_visited) as max_time,min(time_visited) as min_time
 						FROM  '.WP_VA_VISITORS_TABLE.'
-						GROUP BY ip
+						GROUP BY cookie
 				) AS cookie_c
 				ORDER BY cookie_count DESC Limit 0,10';
 	$results_cookie = $wpdb->get_results($sql);
