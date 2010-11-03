@@ -180,12 +180,15 @@ function make_stat_chart($results, $isJQuery){
 }
 
 function getRealIp(){
-  if (!empty($_SERVER['HTTP_CLIENT_IP'])){
-      $ip=$_SERVER['HTTP_CLIENT_IP'];
-  }else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+  
+	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
       $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
   }else{
-      $ip=$_SERVER['REMOTE_ADDR'];
+  		if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+      		$ip=$_SERVER['HTTP_CLIENT_IP'];
+  		}else{
+      		$ip=$_SERVER['REMOTE_ADDR'];
+  		}
   }
   return $ip;
 }
@@ -203,7 +206,7 @@ function getOS($agent){
 }
 
 function getBrowser($agent){
-	$browsers = array('ucweb'=>'UCWeb','wordpress'=>'WP','msie'=>'IE' ,'firefox'=>'Firefox','chrome'=> 'Chrome', 'opera'=>'Opera', 'apple'=>'Safari', 'safari'=>'Safari');
+	$browsers = array('ucweb'=>'UCWeb','wordpress'=>'WP','msie'=>'IE' ,'firefox'=>'Firefox','chrome'=> 'Chrome', 'opera'=>'Opera', 'apple'=>'Safari', 'safari'=>'Safari', 'Rss-Reader'=>'feed');
 	$agent = strtolower($agent);
 	foreach ($browsers as $key=>$browser)
 			if(strpos($agent,$key)>-1)
