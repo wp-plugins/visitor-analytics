@@ -35,6 +35,7 @@ function make_table($results,$results_count,$page_no=1){
 		   }else{
 		   	echo '<td><a target="_blank" href="'.$r->referer.'" title="'.$r->referer.'">'.get_referer_domain($r->referer).'</a></td>';
 		   }
+		   if(empty($va_options['ip_addr'])) $va_options['ip_addr']='http://images.ziming.org/special_use/ip/?ip=';
 		   $cuva_ip_address= $va_options['ip_addr'].$r->ip;
 		   echo '<td><a title="'.$cuva_ip_address.'" href="'.VA_ADMIN_URL.'&va_filter=ip&va_ip='.$r->ip.'">'.$r->ip.'</a><a href="'.$cuva_ip_address.'" target="_blank" ><img src="'.VA_BASEFOLDER.'img/questionmark-icon.gif"/></a></td>';
 		   echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->cookie.'" title="'.$va_lang['title_cookie'].'">'.$r->cookie.'</a></td>';
@@ -435,23 +436,22 @@ function va_time_span($visit_time){
 	 $date1 =  (int)($dateTime1->format("z"));
 	 $date2 =  (int)($dateTime2->format("z"));
 	 $diff = $date1 - $date2;
-	 if($diff > 0 )	$time_span['diff_d'] = true;
-
+	 if($diff != 0 )	$time_span['diff_d'] = true;
 	 
 	 $date1 =  (int)($dateTime1->format("W"));			
 	 $date2 =  (int)($dateTime2->format("W"));
 	 $diff = $date1 - $date2;
-	 if($diff > 0 ) $time_span['diff_w'] = true;
+	 if($diff != 0 ) $time_span['diff_w'] = true;
 	 
 	 $date1 =  (int)($dateTime1->format("n"));			
 	 $date2 =  (int)($dateTime2->format("n"));
 	 $diff = $date1 - $date2;
-	 if($diff > 0 ) $time_span['diff_m'] = true;
+	 if($diff != 0 ) $time_span['diff_m'] = true;
 	 
 	 $date1 =  (int)($dateTime1->format("Y"));			
 	 $date2 =  (int)($dateTime2->format("Y"));
 	 $diff = $date1 - $date2;
-	 if($diff > 0 ) $time_span['diff_y'] = true;
+	 if($diff != 0 ) $time_span['diff_y'] = true;
 	 
 	 return $time_span;
 }

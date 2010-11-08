@@ -47,15 +47,15 @@ function data_analytics(){
 	$results_cookie = $wpdb->get_results($sql);
 	
 	## show visitors analytics
-	$sql='SELECT * FROM '.WP_VA_VISITORS_TABLE;
+	$sql='SELECT * FROM '.WP_VA_VISITORS_TABLE.' order by time_visited asc';
 	$results_visitors = $wpdb->get_results($sql);
 	
 	## show visitors analytics-2
-	$sql='SELECT ip, max(time_visited) as time_visited FROM '.WP_VA_VISITORS_TABLE.' GROUP BY ip';
+	$sql='SELECT ip, max(time_visited) as time_visited FROM '.WP_VA_VISITORS_TABLE.' GROUP BY ip order by time_visited asc';
 	$results_visitors_ip = $wpdb->get_results($sql);
 	
 	## show visitors analytics-3
-	$sql='SELECT cookie, max(time_visited) as time_visited FROM '.WP_VA_VISITORS_TABLE.' GROUP BY cookie';
+	$sql='SELECT cookie, max(time_visited) as time_visited FROM '.WP_VA_VISITORS_TABLE.' GROUP BY cookie order by time_visited asc';
 	$results_visitors_cookie = $wpdb->get_results($sql);
 	
 	foreach($results_url as $r){
@@ -86,9 +86,10 @@ function data_analytics(){
 		  $hot_cookie_min_time[] = va_get_localtime_2($r->min_time, $timezone);
 	}
   
-  $va_stat=va_get_analytics($results_visitors);
-  $va_stat_ip=va_get_analytics($results_visitors_ip);
-  $va_stat_cookie=va_get_analytics($results_visitors_cookie);
+  $va_stat = va_get_analytics($results_visitors);
+  $va_stat_ip = va_get_analytics($results_visitors_ip);
+  $va_stat_cookie = va_get_analytics($results_visitors_cookie);
+  
 	echo '<table class="widefat" cellspacing="0">';
  	echo '<thead><tr>';
 	echo '<th>Hot Url</th><th>Count</th><th>Hot Entrance</th><th>Count</th><th>Hot Out Refer</th><th>Count</th>';

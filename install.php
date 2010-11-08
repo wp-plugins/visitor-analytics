@@ -45,6 +45,7 @@ function visitor_analytics_install(){
 	$wpdb->get_results($sql);
 	
 	$va_options['per_page']=30;
+	$va_options['ip_addr'] = 'http://images.ziming.org/special_use/ip/?ip=';
 	$va_options['ban_ips']='';
 	$va_options['ban_message']='You Are Ban!';
 	$va_all_time[]=1;
