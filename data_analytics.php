@@ -112,29 +112,29 @@ function data_analytics(){
 	echo '</tr></thead>';
 	echo '<tr>';
 	echo '<td>Active Visits</td>';
-	echo '<td>'.$va_stat[0].'</td>';
-	echo '<td>'.$va_stat[1].'</td>';
-	echo '<td>'.$va_stat[2].'</td>';
-	echo '<td>'.$va_stat[3].'</td>';
-	echo '<td>'.$va_stat[4].'</td>';
+	echo '<td>'.$va_stat['hour'].'</td>';
+	echo '<td>'.$va_stat['day'].'</td>';
+	echo '<td>'.$va_stat['week'].'</td>';
+	echo '<td>'.$va_stat['month'].'</td>';
+	echo '<td>'.$va_stat['year'].'</td>';
 	echo '</tr>';
 	
 	echo '<tr>';
 	echo '<td>Active IPs</td>';
-	echo '<td>'.$va_stat_ip[0].'</td>';
-	echo '<td>'.$va_stat_ip[1].'</td>';
-	echo '<td>'.$va_stat_ip[2].'</td>';
-	echo '<td>'.$va_stat_ip[3].'</td>';
-	echo '<td>'.$va_stat_ip[4].'</td>';
+	echo '<td>'.$va_stat_ip['hour'].'</td>';
+	echo '<td>'.$va_stat_ip['day'].'</td>';
+	echo '<td>'.$va_stat_ip['week'].'</td>';
+	echo '<td>'.$va_stat_ip['month'].'</td>';
+	echo '<td>'.$va_stat_ip['year'].'</td>';
 	echo '</tr>';
 	
 	echo '<tr>';
 	echo '<td>Active Cookies</td>';
-	echo '<td>'.$va_stat_cookie[0].'</td>';
-	echo '<td>'.$va_stat_cookie[1].'</td>';
-	echo '<td>'.$va_stat_cookie[2].'</td>';
-	echo '<td>'.$va_stat_cookie[3].'</td>';
-	echo '<td>'.$va_stat_cookie[4].'</td>';
+	echo '<td>'.$va_stat_cookie['hour'].'</td>';
+	echo '<td>'.$va_stat_cookie['day'].'</td>';
+	echo '<td>'.$va_stat_cookie['week'].'</td>';
+	echo '<td>'.$va_stat_cookie['month'].'</td>';
+	echo '<td>'.$va_stat_cookie['year'].'</td>';
 	echo '</tr>';
 	
 	echo '</table>';

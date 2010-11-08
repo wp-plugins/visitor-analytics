@@ -2,8 +2,8 @@
 function make_table($results,$results_count,$page_no=1){
 	global $va_lang;
 	$timezone = va_get_timezone();
-	$va_per_page = get_option('va_per_page', TRUE);
-	$per_page = $va_per_page[0];
+	$va_options = get_option('va_options', TRUE);
+	$per_page = $va_options['per_page'];
 	if(empty($per_page)) $per_page = 20;
 	echo '<div style="width:100%;background-color:#ffffff">';	
 	echo '<table class="widefat" cellspacing="0"><thead>';
@@ -35,7 +35,7 @@ function make_table($results,$results_count,$page_no=1){
 		   }else{
 		   	echo '<td><a target="_blank" href="'.$r->referer.'" title="'.$r->referer.'">'.get_referer_domain($r->referer).'</a></td>';
 		   }
-		   $cuva_ip_address='http://images.ziming.org/special_use/ip/ip.php?action=getip&ip_url='.$r->ip;
+		   $cuva_ip_address= $va_options['ip_addr'].$r->ip;
 		   echo '<td><a title="'.$cuva_ip_address.'" href="'.VA_ADMIN_URL.'&va_filter=ip&va_ip='.$r->ip.'">'.$r->ip.'</a><a href="'.$cuva_ip_address.'" target="_blank" ><img src="'.VA_BASEFOLDER.'img/questionmark-icon.gif"/></a></td>';
 		   echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->cookie.'" title="'.$va_lang['title_cookie'].'">'.$r->cookie.'</a></td>';
 		   echo '<td>';
@@ -412,50 +412,87 @@ function va_get_timezone(){
 	return $timezone;
 }
 
-function va_get_analytics($results){
-	  if(!count($results)) return 'no data';
-	  $hour_stat[0]=0;
-	  $day_stat[0]=0;
-	  $week_stat[0]=0;
-	  $month_stat[0]=0;
-	  $year_stat[0]=0;
-		foreach($results as $r){
-				$timezone = va_get_timezone();
-				$dateTime1 = new DateTime(date('Y-m-d H:i:s'));
-				$dateTime2 = new DateTime($r->time_visited);
-				$dateTime1->setTimezone(new DateTimeZone($timezone));
-				$dateTime2->setTimezone(new DateTimeZone($timezone));
-				
-				//$date1 =  strtotime($dateTime1->format("Y-m-d 0:0:0"));
-				$date1 =  strtotime($dateTime1->format("Y-m-d H:i:s"));
-				$date2 =  strtotime($dateTime2->format("Y-m-d H:i:s"));
+function va_time_span($visit_time){
+		
+	 $time_span['diff_h'] = false;
+	 $time_span['diff_d'] = false;
+	 $time_span['diff_w'] = false;
+	 $time_span['diff_m'] = false;
+	 $time_span['diff_y'] = false;
+	
+	 $timezone = va_get_timezone();
+	 $dateTime1 = new DateTime(date('Y-m-d H:i:s'));
+	 $dateTime2 = new DateTime($visit_time);
+	 
+	 $dateTime1->setTimezone(new DateTimeZone($timezone));
+	 $dateTime2->setTimezone(new DateTimeZone($timezone));
+	 
+	 $date1 =  (int)($dateTime1->format("G"));
+	 $date2 =  (int)($dateTime2->format("G"));
+	 $diff = $date1 - $date2;
+	 if($diff != 0 )	$time_span['diff_h'] = true;
+	 
+	 $date1 =  (int)($dateTime1->format("z"));
+	 $date2 =  (int)($dateTime2->format("z"));
+	 $diff = $date1 - $date2;
+	 if($diff > 0 )	$time_span['diff_d'] = true;
 
-				$diff_y = floor(($date1 - $date2)/(60*60*24*365));
-				if($diff_y < 5){
-					 $year_stat[$diff_y] +=1;
-					 $diff_m = floor(($date1 - $date2)/(60*60*24*30));
-						if($diff_m < 12){
-							 $month_stat[$diff_m] +=1;
-					 		 $diff_w = floor(($date1 - $date2)/(60*60*24*7));
-							 if($diff_w < 4){
-							 		$week_stat[$diff_w] +=1;
-							 		$diff_d = floor(($date1 - $date2)/(60*60*24));
-									if($diff_d < 30){
-										$day_stat[$diff_d] +=1;
-										$diff_h = floor(($date1 - $date2)/(60*60)); //latest hour , $hour_stat[0]
-										if($diff_h < 24){
-											 $hour_stat[$diff_h] +=1; //here i only record the latest 24 hours
-										}
-									}
-							 }
-						}
-				 }
-			}		
-			$va_stat[0]=$hour_stat[0];
-			$va_stat[1]=$day_stat[0];
-			$va_stat[2]=$week_stat[0];
-			$va_stat[3]=$month_stat[0];
-			$va_stat[4]=$year_stat[0];
+	 
+	 $date1 =  (int)($dateTime1->format("W"));			
+	 $date2 =  (int)($dateTime2->format("W"));
+	 $diff = $date1 - $date2;
+	 if($diff > 0 ) $time_span['diff_w'] = true;
+	 
+	 $date1 =  (int)($dateTime1->format("n"));			
+	 $date2 =  (int)($dateTime2->format("n"));
+	 $diff = $date1 - $date2;
+	 if($diff > 0 ) $time_span['diff_m'] = true;
+	 
+	 $date1 =  (int)($dateTime1->format("Y"));			
+	 $date2 =  (int)($dateTime2->format("Y"));
+	 $diff = $date1 - $date2;
+	 if($diff > 0 ) $time_span['diff_y'] = true;
+	 
+	 return $time_span;
+}
+
+function va_get_analytics($results){
+		$va_stat['hour'] = 0;
+		$va_stat['day'] = 0;
+		$va_stat['week'] = 0;
+		$va_stat['month'] = 0;
+		$va_stat['year'] = 0;
+		foreach($results as $r){
+				$time_span = va_time_span($r->time_visited);
+				
+				if($time_span['diff_h']){
+					$va_stat['hour'] = 1;
+				}else{
+					$va_stat['hour'] = $va_stat['hour'] + 1;
+				}				
+				if($time_span['diff_d']){
+					$va_stat['day'] = 1;
+				}else{
+					$va_stat['day'] = $va_stat['day'] + 1;
+				}
+				if($time_span['diff_w']){
+					$va_stat['week'] = 1;
+				}else{
+					$va_stat['week'] = $va_stat['week'] + 1;
+				}
+				if($time_span['diff_m']){
+					$va_stat['month'] = 1;	
+				}else{
+					$va_stat['month'] = $va_stat['month'] + 1;	
+				}
+				if($time_span['diff_y']){
+					 $va_stat['year'] = 1;
+				}else{
+					 $va_stat['year'] = $va_stat['year'] + 1;
+				}
+				
+			}
+			
       return $va_stat;
 }
 

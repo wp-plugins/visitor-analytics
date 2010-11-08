@@ -44,17 +44,19 @@ function visitor_analytics_install(){
 		)";
 	$wpdb->get_results($sql);
 	
-	$va_per_page[]=30;
+	$va_options['per_page']=30;
+	$va_options['ban_ips']='';
+	$va_options['ban_message']='You Are Ban!';
 	$va_all_time[]=1;
 	$va_all_visit[]=2;
 	$va_search['fp']='';
 	$va_search['agent']='';
 	$va_search['ip']='';
 	$va_search['days']='';
-	$va_ban_ips[]='';
+
 	
-	if(!update_option('va_per_page', $va_per_page)){
-    		add_option('va_per_page',$va_per_page);
+	if(!update_option('va_options', $va_options)){
+    		add_option('va_options',$va_options);
   }
   if(!update_option('va_all_time', $va_all_time)){
     		add_option('va_all_time',$va_all_time);
@@ -64,9 +66,6 @@ function visitor_analytics_install(){
   }
   if(!update_option('va_search',$va_search)){
     		add_option('va_search',$va_search);
-  }
-  if(!update_option('va_ban_ips',$va_ban_ips)){
-    		add_option('va_ban_ips',$va_ban_ips);
   }
 
 }
