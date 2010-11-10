@@ -244,7 +244,7 @@ if(!function_exists(is_bot)){
 		if (strlen($agent) < 50){
 			$is_bot = true;
 		}
-		$bots = array('Google Bot' => 'google', 'MSN Bot' => 'msn', 'Baidu Bot' => 'baidu', 'YaHoo Bot' => 'yahoo', 'SoSo Bot' => 'soso', 'Sogou Bot' => 'sogou', 'Spider Bot' => 'spider', 'Bot' => 'bot', 'Search Bot' => 'search');
+		$bots = array('Google Bot' => 'google', 'MSN Bot' => 'msn', 'Baidu Bot' => 'baidu', 'YaHoo Bot' => 'yahoo', 'SoSo Bot' => 'soso', 'Sogou Bot' => 'sogou', 'Spider Bot' => 'spider', 'Bot' => 'bot', 'Search Bot' => 'search', 'Alexa' => 'alexa');
 		foreach ($bots as $name => $lookfor) { 
 			if (stristr($agent, $lookfor) !== false) { 
 					$is_bot = true;

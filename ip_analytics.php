@@ -2,10 +2,10 @@
 function ip_analytics($page_no){
 	if(!empty($_POST)){
 		if (is_numeric($_POST['va_all_time'])){
-			$va_all_time = floor($_POST['va_all_time']);
+			$va_all_time[] = floor($_POST['va_all_time']);
 		}
 		if (is_numeric($_POST['va_all_visit'])){
-			$va_all_visit = floor($_POST['va_all_visit']);
+			$va_all_visit[] = floor($_POST['va_all_visit']);
 		}
 		update_option('va_all_time', $va_all_time);
 		update_option('va_all_visit', $va_all_visit);
@@ -18,7 +18,7 @@ function ip_analytics($page_no){
 	$va_options = get_option('va_options', TRUE);
 	$va_all_time = get_option('va_all_time', TRUE);
 	$va_all_visit = get_option('va_all_visit', TRUE);
-	$per_page = $va_per_page['per_page'];
+	$per_page = $va_options['per_page'];
 	$all_time = $va_all_time[0];
 	$all_visit = $va_all_visit[0];
 	if(empty($per_page)) $per_page = 20;
