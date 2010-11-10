@@ -3,7 +3,7 @@
 Plugin Name: Visitor Analytics
 Plugin URI: http://ziming.org/dev/visitor-analytics
 Description: Visitor Depth Analyse and Interaction.
-Version: 1.1.6
+Version: 1.1.7
 Author: Suny Tse
 Author URI: http://ziming.org
  */
@@ -59,13 +59,13 @@ function init_lang(){
 
 function visitor_analytics(){
 	
-	$va_menu = '<div><a href="'.VA_ADMIN_URL.'">Recent Visitor</a> > >
-	                 <a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics ">Cookie Analytics</a> > >
-	                 <a href="'.VA_ADMIN_URL.'&va_page=ip_analytics ">IP Analytics</a> > >
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_monitor ">Visitor Analytics</a> > >
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_comments ">Visitor Comments</a> > >
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_search ">Search & Delete</a> > >
-	                   <a href="'.VA_ADMIN_URL.'&va_page=data_analytics ">Data Analytics</a> > >
+	$va_menu = '<div><a href="'.VA_ADMIN_URL.'">Recent Visitor</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics ">Cookie Analytics</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=ip_analytics ">IP Analytics</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_monitor ">Visitor Analytics</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_comments ">Visitor Comments</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_search ">Search & Delete</a> &nbsp;|&nbsp;
+	                   <a href="'.VA_ADMIN_URL.'&va_page=data_analytics ">Data Analytics</a> &nbsp;|&nbsp;
 	                 <a href="'.VA_ADMIN_URL.'&va_page=va_option ">Option</a> > ></div>';
 
 	if(isset($_GET['page_no'])){
