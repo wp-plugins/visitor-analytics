@@ -59,17 +59,20 @@ function data_analytics(){
 	$results_visitors_cookie = $wpdb->get_results($sql);
 	
 	foreach($results_url as $r){
+		  $hot_url_title[]	=	cut_str_2($r->url,35);
 		  $hot_url[]	=	$r->url;
 		  $hot_url_count[]	=	$r->url_count;
 	}
 	foreach($results_referer as $r){
 			if(empty($r->referer)) $r->referer='direct';
-			$hot_refer[]	=	cut_str_2($r->referer,35);
+			$hot_refer_title[]	=	cut_str_2($r->referer,35);
+			$hot_refer[] = $r->referer;
 		  $hot_refer_count[]	=	$r->referer_count;
 	}
 	foreach($results_out_referer as $r){
 		if(empty($r->out_referer)) $r->out_referer='direct';
-			$hot_out_refer[]	=	cut_str_2($r->out_referer,35);
+			$hot_out_refer_title[]	=	cut_str_2($r->out_referer,35);
+			$hot_out_refer[]	=	$r->out_referer;
 		  $hot_out_refer_count[]	=	$r->out_referer_count;
 	}
 	foreach($results_ip as $r){
@@ -95,7 +98,7 @@ function data_analytics(){
 	echo '<th>Hot Url</th><th>Count</th><th>Hot Entrance</th><th>Count</th><th>Hot Out Refer</th><th>Count</th>';
 	echo '</tr></thead>';
 	for($i=0;$i<10;$i++){
-	  echo '<tr><td><a href="'.get_bloginfo('home').$hot_url[$i].'" target="_blank">'.$hot_url[$i].'</a></td><td>'.$hot_url_count[$i].'</td><td><a href="'.($hot_refer[$i]=='direct' ? get_bloginfo('home') : $hot_refer[$i]).'" target="_blank">'.$hot_refer[$i].'</a></td><td>'. $hot_refer_count[$i].'</td><td><a href="'.($hot_out_refer[$i]=='direct' ? get_bloginfo('home') : $hot_out_refer[$i]).'" target="_blank">'.$hot_out_refer[$i].'</a></td><td>'. $hot_out_refer_count[$i].'</td></tr>';
+	  echo '<tr><td><a href="'.get_bloginfo('home').$hot_url[$i].'" target="_blank">'.$hot_url_title[$i].'</a></td><td>'.$hot_url_count[$i].'</td><td><a href="'.($hot_refer[$i]=='direct' ? get_bloginfo('home') : $hot_refer[$i]).'" target="_blank">'.$hot_refer_title[$i].'</a></td><td>'. $hot_refer_count[$i].'</td><td><a href="'.($hot_out_refer[$i]=='direct' ? get_bloginfo('home') : $hot_out_refer[$i]).'" target="_blank">'.$hot_out_refer_title[$i].'</a></td><td>'. $hot_out_refer_count[$i].'</td></tr>';
 	}
 	echo '<thead><tr>';
 	echo '<th>Hot IPs</th><th>Count</th><th> Time  Span </th><th>Hot cookies</th><th>Time  Span</th><th>Count</th>';
