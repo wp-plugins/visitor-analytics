@@ -4,7 +4,7 @@ Donate link: http://ziming.org
 Tags: visitor,views,analytics,cookie,ip
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 1.1.7
+Stable tag: 1.1.9
 
 This is a thoughtful visitor analytics and interaction plugin for wordpress.
 
@@ -33,6 +33,9 @@ No till now.
 == Frequently Asked Questions ==
 No till now.
 == Changelog ==
-No till now.
+2010-11-19 Version 1.1.9
+
+fixed a url bug in 'data_analytics.php'.
+
 == Upgrade Notice ==
 No till now.
