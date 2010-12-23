@@ -1,7 +1,6 @@
 <?php
 function filter_ip($ip,$page_no){
 	global $wpdb;
-	global $va_lang;
 	if(!empty($_POST)){
 		if (!empty($_POST['va_remove'])){
 			$sql = "delete from ".WP_VA_FP_TABLE." where stalker_id ='".$_POST['va_stalkerId']."' and ip='$ip' and flag='ip'";
@@ -34,19 +33,19 @@ function filter_ip($ip,$page_no){
 	echo '<form name="form1" method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 	echo '<table style="width:100%;"><tr><td style="vertical-align:top;">';
 	if ($stalkerId>0){
-		echo sprintf($va_lang['fp_belong'],"<a href='".VA_ADMIN_URL."&va_page=stalkers&va_id=$stalkerId&va_name=$stalkerName'>$stalkerName</a>");
-		echo "<input type='submit' value ='".$va_lang['fp_remove']."' name='va_remove' style='width:60px;height:25px;'/>
+		echo sprintf(__('This is %s\' fingerprint.','visitor-analytics'),"<a href='".VA_ADMIN_URL."&va_page=stalkers&va_id=$stalkerId&va_name=$stalkerName'>$stalkerName</a>");
+		echo "<input type='submit' value ='".__('Remove','visitor-analytics')."' name='va_remove' style='width:60px;height:25px;'/>
 		<input type='text' value ='$stalkerId' name='va_stalkerId' style='visibility:hidden;width:0px;'/>";		
 	}else{
 		$sql = "select * from ".WP_VA_TABLE."";
 		$data = $wpdb->get_results($sql);
-		echo "<li>".$va_lang['fp_create_new'].":<input type='text'' size='10' name ='va_name'>
-		<input type='submit'  name='va_create' value ='".$va_lang['fp_create']."' style='width:60px;height:25px;'/></li>";
-		echo '<li>'.$va_lang['fp_add_to'].':<select name="va_stalkers">';
+		echo "<li>".__('Define a new visitor','visitor-analytics').":<input type='text'' size='10' name ='va_name'>
+		<input type='submit'  name='va_create' value ='".__('Create','visitor-analytics')."' style='width:60px;height:25px;'/></li>";
+		echo '<li>'.__('Add to defined visitor','visitor-analytics').':<select name="va_stalkers">';
 		foreach($data as $d){
 			echo '<option value="'.$d->id.'">'.$d->name.'</option>';
 		}
-		echo "</select><input type='submit' name='va_add' value ='".$va_lang['fp_add']."' style='width:40px;height:25px;'/></li>";
+		echo "</select><input type='submit' name='va_add' value ='".__('Add','visitor-analytics')."' style='width:40px;height:25px;'/></li>";
 
 	}
 

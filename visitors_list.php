@@ -1,11 +1,7 @@
 <?php
 function visitor_list($page_no) {
 	global $wpdb;
-	global $va_lang;
-	$visitor_analytics_options = get_option('visitor_analytics_options', TRUE);
-	$sql = "select option_value from wp_options where option_name ='timezone_string'";
-	$timezone_results = $wpdb->get_results($sql);
-	$timezone = $timezone_results[0]->option_value;
+
 	$sql = "select ".WP_VA_VISITORS_TABLE.".access, ".WP_VA_VISITORS_TABLE.".id as visit_id, ".WP_VA_VISITORS_TABLE.".browser, ".WP_VA_VISITORS_TABLE.".os, ".WP_VA_VISITORS_TABLE.".referer,".WP_VA_VISITORS_TABLE.".comment_id, 
 		".WP_VA_VISITORS_TABLE.".agent, ".WP_VA_VISITORS_TABLE.".time_visited, ".WP_VA_VISITORS_TABLE.".cookie, ".WP_VA_VISITORS_TABLE.".url, ".WP_VA_VISITORS_TABLE.".ip,
 		".WP_VA_TABLE.".id as stalker_id, ".WP_VA_TABLE.".name, ".WP_VA_TABLE.".is_stat,
@@ -22,7 +18,7 @@ function visitor_list($page_no) {
 	$results_count=$wpdb->num_rows;
 
 	if (empty($results)){
-		echo '<div><p>'.$va_lang['menu_no_data'].'</p></div>';
+		echo '<div><p>'.__('No Data','visitor-analyrics').'</p></div>';
 	}else{
 		make_table($results,$results_count,$page_no);
 	}

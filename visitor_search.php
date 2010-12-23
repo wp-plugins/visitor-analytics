@@ -48,16 +48,16 @@ function visitor_search($page_no=1){
 	echo '<script LANGUAGE="JavaScript">function confirmSubmit(){
 		return confirm("Are you sure to delete these?")?true:false;
 		}</script>';
-	echo $va_lang['delete_title'].":";
+	echo __('Delete all logs which contains(by or)','visitor-analytics').":";
 	echo '<form name="form1" method="post" action="'.$_SERVER['REQUEST_URI'].'">';
-	echo "<table><tr><td>".$va_lang['menu_fingerprint']." = <input type='text' size='50' name='va_fp' value='".$search_fp."'/> </td>";
-	echo "<td>".$va_lang['menu_agent']." like : <input type='text' size='50' name='va_agent' value='".$search_agent."'/></td></tr>";
-	echo "<tr><td>IP like: <input type='text' size='50' name='va_ip' value='".$search_ip."'/></td>";
-	echo "<td>".sprintf($va_lang['delete_days'],"<input type='text' size='5' name='va_days' value='".$search_days."'/>")."</td></tr></table>";
-	echo "<input type='submit' style='width:150px;height:25px;' value='".$va_lang['delete_search']."'/>";
+	echo "<table><tr><td>".__('Cookie','visitor-analytics')." = <input type='text' size='50' name='va_fp' value='".$search_fp."'/> </td>";
+	echo "<td>".__('Agent like :','visitor-analytics')."<input type='text' size='50' name='va_agent' value='".$search_agent."'/></td></tr>";
+	echo "<tr><td>".__('IP like:','visitor-analytics')."<input type='text' size='50' name='va_ip' value='".$search_ip."'/></td>";
+	echo "<td>".sprintf(__('Search log over %s days ago','visitor-analytics'),"<input type='text' size='5' name='va_days' value='".$search_days."'/>")."</td></tr></table>";
+	echo "<input type='submit' style='width:150px;height:25px;' value='".__('Search for log','visitor-analytics')."'/>";
 	//if (empty($whereClause))
 	//	return true;
-	echo "<input type='submit' name ='va_delete' style='width:150px;height:25px;' value='".$va_lang['delete_delete']."' onClick='return confirmSubmit();'/>";	
+	echo "<input type='submit' name ='va_delete' style='width:150px;height:25px;' value='".__('Delete following log','visitor-analytics')."' onClick='return confirmSubmit();'/>";	
 	echo "</form>"; 
 	echo "<br>";
 	$sql = "select ".WP_VA_VISITORS_TABLE.".id as visit_id, ".WP_VA_VISITORS_TABLE.".browser, ".WP_VA_VISITORS_TABLE.".os, ".WP_VA_VISITORS_TABLE.".referer,".WP_VA_VISITORS_TABLE.".comment_id, 
@@ -72,7 +72,7 @@ function visitor_search($page_no=1){
 		
 	$results = $wpdb->get_results($sql);
 	$results_count=$wpdb->num_rows;
-	echo "<div>".$va_lang['delete_count'].": ".count($results)."</div>";
+	echo "<div>".__('Log Number','visitor-analytics').": ".count($results)."</div>";
 	make_table($results,$results_count,$page_no);
 }
 ?>

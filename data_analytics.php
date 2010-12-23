@@ -1,7 +1,6 @@
 <?php
 function data_analytics(){
 	global $wpdb;
-	global $va_lang;
 	$timezone = va_get_timezone();
 	## Hot url
 	$sql='SELECT * FROM (
@@ -95,13 +94,13 @@ function data_analytics(){
   
 	echo '<table class="widefat" cellspacing="0">';
  	echo '<thead><tr>';
-	echo '<th>Hot Url</th><th>Count</th><th>Hot Entrance</th><th>Count</th><th>Hot Out Refer</th><th>Count</th>';
+	echo '<th>'.__('Hot Url','visitor-analytics').'</th><th>'.__('Count','visitor-analytics').'</th><th>'.__('Hot Entrance','visitor-analytics').'</th><th>'.__('Count','visitor-analytics').'</th><th>'.__('Hot Out Refer','visitor-analytics').'</th><th>'.__('Count','visitor-analytics').'</th>';
 	echo '</tr></thead>';
 	for($i=0;$i<10;$i++){
 	  echo '<tr><td><a href="'.get_bloginfo('home').$hot_url[$i].'" target="_blank">'.$hot_url_title[$i].'</a></td><td>'.$hot_url_count[$i].'</td><td><a href="'.($hot_refer[$i]=='direct' ? get_bloginfo('home') : $hot_refer[$i]).'" target="_blank">'.$hot_refer_title[$i].'</a></td><td>'. $hot_refer_count[$i].'</td><td><a href="'.($hot_out_refer[$i]=='direct' ? get_bloginfo('home') : $hot_out_refer[$i]).'" target="_blank">'.$hot_out_refer_title[$i].'</a></td><td>'. $hot_out_refer_count[$i].'</td></tr>';
 	}
 	echo '<thead><tr>';
-	echo '<th>Hot IPs</th><th>Count</th><th> Time  Span </th><th>Hot cookies</th><th>Time  Span</th><th>Count</th>';
+	echo '<th>'.__('Hot IPs','visitor-analytics').'</th><th>'.__('Count','visitor-analytics').'</th><th>'.__('Time Span','visitor-analytics').'</th><th>'.__('Hot cookies','visitor-analytics').'</th><th>'.__('Time Span','visitor-analytics').'</th><th>'.__('Count','visitor-analytics').'</th>';
 	echo '</tr></thead>';
 	for($i=0;$i<10;$i++){
 	  echo '<tr><td><a href="'.VA_ADMIN_URL.'&va_filter=ip&va_ip='.$hot_ip[$i].'" target="_blank">'.$hot_ip[$i].'</a></td>
@@ -112,10 +111,10 @@ function data_analytics(){
 	            <td>'.$hot_cookie_count[$i].'</a></td></tr>';
 	}
 	echo '<thead><tr>';
-	echo '<th>Time Span</th><th>Recent Hour</th><th>Recent Day</th><th>Recent Week</th><th>Recent Month</th><th>Recent Year</th>';
+	echo '<th>'.__('Time Span','visitor-analytics').'</th><th>'.__('Recent Hour','visitor-analytics').'</th><th>'.__('Recent Day','visitor-analytics').'</th><th>'.__('Recent Week','visitor-analytics').'</th><th>'.__('Recent Month','visitor-analytics').'</th><th>'.__('Recent Year','visitor-analytics').'</th>';
 	echo '</tr></thead>';
 	echo '<tr>';
-	echo '<td>Active Visits</td>';
+	echo '<td>'.__('Active Visits','visitor-analytics').'</td>';
 	echo '<td>'.$va_stat['hour'].'</td>';
 	echo '<td>'.$va_stat['day'].'</td>';
 	echo '<td>'.$va_stat['week'].'</td>';
@@ -124,7 +123,7 @@ function data_analytics(){
 	echo '</tr>';
 	
 	echo '<tr>';
-	echo '<td>Active IPs</td>';
+	echo '<td>'.__('Active IPs','visitor-analytics').'</td>';
 	echo '<td>'.$va_stat_ip['hour'].'</td>';
 	echo '<td>'.$va_stat_ip['day'].'</td>';
 	echo '<td>'.$va_stat_ip['week'].'</td>';
@@ -133,7 +132,7 @@ function data_analytics(){
 	echo '</tr>';
 	
 	echo '<tr>';
-	echo '<td>Active Cookies</td>';
+	echo '<td>'.__('Active Cookies','visitor-analytics').'</td>';
 	echo '<td>'.$va_stat_cookie['hour'].'</td>';
 	echo '<td>'.$va_stat_cookie['day'].'</td>';
 	echo '<td>'.$va_stat_cookie['week'].'</td>';

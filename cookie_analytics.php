@@ -14,7 +14,6 @@ function cookie_analytics($page_no){
 				echo '&va_cookie='.$_GET['va_cookie'];
 	}
 	global $wpdb;
-	global $va_lang;
 	$va_options = get_option('va_options', TRUE);
 	$va_all_time = get_option('va_all_time', TRUE);
 	$va_all_visit = get_option('va_all_visit', TRUE);
@@ -33,12 +32,12 @@ function cookie_analytics($page_no){
 				left join ".WP_VA_TABLE." as a on a.id=f.stalker_id";
 	$results = $wpdb->get_results($sql);
 	echo '<form name="form1" method="post" action="'.$_SERVER['REQUEST_URI'].'">';
-	echo "<p align=\"left\">".sprintf($va_lang['va_span_option'],"<input type='text' size='3' name='va_all_time' value='".$all_time."'/>").", ";
-	echo sprintf($va_lang['va_visits_option'],"<input type='text' size='3' name='va_all_visit' value='".$all_visit."'/>")." ";
-	echo "<input type='submit' value ='".$va_lang['va_refresh']."' style='width:70px;height:25px;'/></p></form>";
+	echo "<p align=\"left\">".sprintf(__('Filter : Only show these which more than %s days','visitor-analytics'),"<input type='text' size='3' name='va_all_time' value='".$all_time."'/>").", ";
+	echo sprintf(__('and visits greater than %s times','visitor-analytics'),"<input type='text' size='3' name='va_all_visit' value='".$all_visit."'/>")." ";
+	echo "<input type='submit' value ='".__('Refresh','visitor-analytics')."' style='width:70px;height:25px;'/></p></form>";
 	echo '<table class="widefat" cellspacing="0"><thead>
-		<tr><th>'.$va_lang['menu_fingerprint'].'</th><th>'.$va_lang['menu_stalker'].'</th><th>'.$va_lang['va_visits'].'</th>
-		<th>'.$va_lang['va_frequency'].'</th><th>'.$va_lang['va_time_span'].'</th><th>'.$va_lang['menu_time'].'</th></tr><tbody>';
+		<tr><th>'.__('Cookie','visitor-analytics').'</th><th>'.__('Name','visitor-analytics').'</th><th>'.__('Visit count','visitor-analytics').'</th>
+		<th>'.__('Frenquency','visitor-analytics').'</th><th>'.__('Date Span','visitor-analytics').'</th><th>'.__('Time Span','visitor-analytics').'</th></tr><tbody>';
 	$isData = false;
 	$show_flag = 0;
 	foreach($results as $r){
@@ -56,7 +55,7 @@ function cookie_analytics($page_no){
 		  	$likelihood = "0".dechex($likelihood);
 		  else 
 		  	$likelihood = dechex($likelihood);
-		  if(empty($r->name)) $r->name = $va_lang['menu_undefine'];
+		  if(empty($r->name)) $r->name = __('undefined','visitor-anaytics');
 		  echo '<tr style="color:#ff'.$likelihood.'00">';
 		  echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->coo.'">'.$r->coo.'</a></td>';
 		  echo '<td>'.$r->name.'</td>';
@@ -71,7 +70,7 @@ function cookie_analytics($page_no){
 	if(ceil($results_count/$per_page)!=0){
 	   echo '<tfoot><tr>';
 	   echo '<th colspan="1"></th><th colspan="1"><a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics';	
-	   echo '&page_no='.((($page_no-1)==0) ? 1 : ($page_no-1)).'" > << PrePage</a></th>';
+	   echo '&page_no='.((($page_no-1)==0) ? 1 : ($page_no-1)).'" > <<'. __('PrePage','visitor-analytics').'</a></th>';
 	   echo '<th colspan="2" align="center"></th>';
 	   echo '<th colspan="1" align="center"><a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics';	
 	   echo '&page_no=';
@@ -80,10 +79,10 @@ function cookie_analytics($page_no){
 	   }else{ 
 	   		echo $page_no+1 ;
 	   } 
-	   echo '" >NextPage >></a></th>';
+	   echo '" >'. __('NextPage','visitor-analytics').' >></a></th>';
 	   echo '<th colspan="1"></th></tr></tfoot>';
 	 }
 	 echo '</table>';
-	 if(!$isData) echo $va_lang['va_no_data'];
+	 if(!$isData) echo  __('No Data','visitor-analytics');
 }
 ?>

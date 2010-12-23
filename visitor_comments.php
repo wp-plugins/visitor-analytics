@@ -11,7 +11,7 @@ function visitor_comments($page_no=1){
 	$results = $wpdb->get_results($sql);
 	$results_count=$wpdb->num_rows;
 	if(empty($results)){
-		echo $va_lang['comments_no_data'];
+		echo __('No Data','visitor-analytics');
 	}else{
 		make_table($results,$results_count,$page_no);
 	}

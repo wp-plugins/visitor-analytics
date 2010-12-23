@@ -1,7 +1,6 @@
 <?php
 function visitor_monitor($page_no=1){
 	global $wpdb;
-	global $va_lang;
 	$timezone = va_get_timezone();
 
 	$sql="select * from ".WP_VA_TABLE." 
@@ -30,21 +29,21 @@ function visitor_monitor($page_no=1){
 		";
 	$results = $wpdb->get_results($sql);
 	if(empty($results)){
-		echo $va_lang['stalkers_no_data'];
+		echo __('No Data','visitor-analytics');
 		return true;
 	}
 	echo '<form name="form1" method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 	echo '<table class="widefat" cellspacing="0"><thead><tr>
-		<th>'.$va_lang['stalkers_name'].'</th>
-		<th>'.$va_lang['stalkers_visits'].'</th>
-		<th>'.$va_lang['stalkers_ip'].'</th>
-		<th>'.$va_lang['stalkers_fp'].'</th>
-		<th>'.$va_lang['stalkers_flag'].'</th>
-		<th>'.$va_lang['stalkers_is_stats'].'</th>
-		<th>'.$va_lang['stalkers_is_block'].'</th>
-		<th>'.$va_lang['stalkers_last_visit'].'</th>
-		<th>'.$va_lang['stalkers_greet'].'</th>
-		<th>'.$va_lang['stalkers_detail'].'</th>
+		<th>'.__('Name','visitor-analytics').'</th>
+		<th>'.__('Name','visitor-analytics').'</th>
+		<th>'.__('IP','visitor-analytics').'</th>
+		<th>'.__('Cookie','visitor-analytics').'</th>
+		<th>'.__('Defined by','visitor-analytics').'</th>
+		<th>'.__('In stat','visitor-analytics').'</th>
+		<th>'.__('Allow visit','visitor-analytics').'</th>
+		<th>'.__('Last visit','visitor-analytics').'</th>
+		<th>'.__('Messege','visitor-analytics').'</th>
+		<th>'.__('Detail','visitor-analytics').'</th>
 		
 		</tr></thead>';
 	foreach($results as $r){
@@ -61,9 +60,9 @@ function visitor_monitor($page_no=1){
 			echo "<div style='color:#ff0000'>NO</div>";
 		echo "</td><td>";
 		if ($r->is_block=='y')
-			echo '<img src="'.VA_BASEFOLDER.'img/denied.png" title="'.$va_lang['menu_denied'].'"/>';
+			echo '<img src="'.VA_BASEFOLDER.'img/denied.png" />';
 		else
-			echo '<img src="'.VA_BASEFOLDER.'img/granted.png" title="'.$va_lang['menu_granted'].'"/>';
+			echo '<img src="'.VA_BASEFOLDER.'img/granted.png" />';
 		echo "</td><td>".va_time_diff(time(),strtotime($r->last_visit_time))."</td><td>";
 		if ($r->is_greet=='y'){
 			//out mail
@@ -86,7 +85,7 @@ function visitor_monitor($page_no=1){
 		}
 		
 		echo "</td>";
-		echo "<td><a href='".VA_ADMIN_URL."&va_page=visitor_tracker&va_id=".$r->id."'>".$va_lang['stalkers_detail']."</a></td>";
+		echo "<td><a href='".VA_ADMIN_URL."&va_page=visitor_tracker&va_id=".$r->id."'>".__('Detail','visitor-analytics')."</a></td>";
 		echo "</tr>";
 	}
 	echo '</table></form>';

@@ -29,7 +29,6 @@ register_activation_hook(__FILE__,'visitor_analytics_install');
 add_action('init', 'visitor_analytics_textdomain');
 add_action('init', 'process_record');
 add_action('admin_menu', 'visitor_analytics_menu');
-init_lang();
 add_action('comment_post', 'log_comment',10,1);
 
 global $table_prefix;
@@ -42,31 +41,19 @@ define('VA_ADMIN_URL', 'index.php?page=visitor-analytics');
 
 ### Create Text Domain For Translations
 function visitor_analytics_textdomain() {
-	$plugin_dir = basename(dirname(__FILE__));
-	load_plugin_textdomain( 'visitor-analytics','wp-content/plugins/'.$plugin_dir, $plugin_dir);
-}
-### Init Usage Language
-function init_lang(){
-	switch (WPLANG){
-		case 'zh_CN':
-			require 'lang/visitor_analytics_i18n_cn.php';
-			break;
-		default:
-			require 'lang/visitor_analytics_i18n_en.php';
-			break;
-	}
+	load_plugin_textdomain('visitor-analytics', false, 'visitor-analytics/lang');
 }
 
 function visitor_analytics(){
 	
-	$va_menu = '<div><a href="'.VA_ADMIN_URL.'">Recent Visitor</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics ">Cookie Analytics</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=ip_analytics ">IP Analytics</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_monitor ">Visitor Analytics</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_comments ">Visitor Comments</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_search ">Search & Delete</a> &nbsp;|&nbsp;
-	                   <a href="'.VA_ADMIN_URL.'&va_page=data_analytics ">Data Analytics</a> &nbsp;|&nbsp;
-	                 <a href="'.VA_ADMIN_URL.'&va_page=va_option ">Option</a> > ></div>';
+	$va_menu = '<div><a href="'.VA_ADMIN_URL.'">'.__('Recent Visitor','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=cookie_analytics ">'.__('Cookie Analytics','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=ip_analytics ">'.__('IP Analytics','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_monitor ">'.__('Visitor Analytics','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_comments ">'.__('Visitor Comments','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=visitor_search ">'.__('Search & Delete','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                   <a href="'.VA_ADMIN_URL.'&va_page=data_analytics ">'.__('Data Analytics','visitor-analytics').'</a> &nbsp;|&nbsp;
+	                 <a href="'.VA_ADMIN_URL.'&va_page=va_option ">'.__('Option','visitor-analytics').'</a></div>';
 
 	if(isset($_GET['page_no'])){
 							$page_no = $_GET['page_no'];

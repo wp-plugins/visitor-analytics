@@ -1,11 +1,10 @@
 <?php
 function visitor_tracker($id,$page_no=1){
-	global $va_lang;
 	global $wpdb;
 	$timezone = va_get_timezone();
 	$sql ="select * from ".WP_VA_TABLE." where id ='".$id."'";
 	$results_message = $wpdb->get_results($sql);
-	$va_submenu='<p><b>Visitor Name: <a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'">'.$results_message[0]->name.'</a></b>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'">General</a>&nbsp;|&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'&va_submenu=message">Leave Message</a>&nbsp;|&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'&va_submenu=option">Option</a>]</p>';
+	$va_submenu='<p><b>'.__('Visitor Name','visitor-analytics').': <a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'">'.$results_message[0]->name.'</a></b>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'">'.__('General','visitor-analytics').'</a>&nbsp;|&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'&va_submenu=message">'.__('Leave Message','visitor-analytics').'</a>&nbsp;|&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=visitor_tracker&va_id='.$id.'&va_submenu=option">'.__('Option','visitor-analytics').'</a>]</p>';
 
 	if(isset($_GET['va_submenu'])){
 		if($_GET['va_submenu'] == 'message'){
@@ -17,16 +16,16 @@ function visitor_tracker($id,$page_no=1){
 			$results_message = $wpdb->get_results($sql);
 			echo $va_submenu;
 			if(!empty($results_message[0]->greet_text)){
-				echo '<p> Recent Message</p>' ;
-				echo 'You greet <b>'.$results_message[0]->name.'</b>: '.$results_message[0]->greet_text.'&nbsp;&nbsp;&nbsp;['.va_get_localtime($results_message[0]->greet_time, $timezone).']';
+				echo '<p>'.__('Recent Message','visitor-analytics').'</p>' ;
+				echo __('You greet','visitor-analytics').'<b>'.$results_message[0]->name.'</b>: '.$results_message[0]->greet_text.'&nbsp;&nbsp;&nbsp;['.va_get_localtime($results_message[0]->greet_time, $timezone).']';
 				if (!empty($results_message[0]->response_text)){
-				 	echo '<p><b>'.$results_message[0]->name.'</b> response to you : '.$results_message[0]->response_text.'&nbsp;&nbsp;&nbsp;['.va_get_localtime($results_message[0]->response_time, $timezone).']</p>';
+				 	echo '<p><b>'.$results_message[0]->name.'</b> '.__('response to you :','visitor-analytics').' '.$results_message[0]->response_text.'&nbsp;&nbsp;&nbsp;['.va_get_localtime($results_message[0]->response_time, $timezone).']</p>';
 				}
 			}
 			echo '<form name="form1" method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 			echo '<p> Greet to <b>'.$results_message[0]->name.':</b></p>';
 			echo '<textarea name="va_greet_text" id="va_greet_text" style="width:500px;margin-bottom:5px;" ></textarea><br />';
-			echo '<input type="submit" value="'.$va_lang['stalker_update'].'" style="height:25px;width:140px"/>';
+			echo '<input type="submit" value="'.__('Update','visitor-analytics').'" style="height:25px;width:140px"/>';
 			echo '</form>';
 		}else if($_GET['va_submenu'] == 'option'){
 			if(!empty($_POST)){
@@ -64,9 +63,9 @@ function visitor_tracker($id,$page_no=1){
 	    echo '> Yes <input type="radio" name="group1" value="stat_no" ';
 							if ($results_option[0]->is_stat =='n') echo "checked";
 			echo '> No</p>';
-			echo '<p>Delete this defined visitor: <input type="radio" name="group_del" value="del_yes" > Yes <input type="radio" name="group_del" value="del_no" checked > No</p>';
-			echo '<p>Delete visiting log: <input type="radio" name="group_v_del" value="del_yes" > Yes <input type="radio" name="group_v_del" value="del_no" checked > No</p>';
-			echo '<input type="submit" value="'.$va_lang['stalker_update'].'" style="height:25px;width:140px"/>';
+			echo '<p>Delete this defined visitor: <input type="radio" name="group_del" value="del_yes" >'.__('Yes','visitor-analytics').'<input type="radio" name="group_del" value="del_no" checked >'.__('No','visitor-analytics').'</p>';
+			echo '<p>Delete visiting log: <input type="radio" name="group_v_del" value="del_yes" >'.__('Yes','visitor-analytics').'<input type="radio" name="group_v_del" value="del_no" checked >'.__('No','visitor-analytics').'</p>';
+			echo '<input type="submit" value="'.__('Update','visitor-analytics').'" style="height:25px;width:140px"/>';
 			echo '</form>';
 		}
 	}else{
@@ -89,21 +88,21 @@ function visitor_tracker($id,$page_no=1){
 			$stalkerName = $results_1[0]->name;
 
 			if(empty($results_1)){
-				echo $va_lang['stalker_no_data'];
+				echo __('No data','visitor-analytics');
 				return;
 			}
 			echo '<div>';
       echo $va_submenu;
-			echo '<b>Defined Cookies :</b> <br />';
+			echo '<b>'.__('Defined Cookies :','visitor-analytics').'</b> <br />';
 			foreach($results_1 as $r){
 				if($r->cookie!=''){
-					echo '<a href="'.VA_ADMIN_URL.'&filter=fingerprint&cookie='.$r->cookie.'" title="'.$va_lang['title_cookie'].'">'.$r->cookie.'</a> , ';
+					echo '<a href="'.VA_ADMIN_URL.'&filter=fingerprint&cookie='.$r->cookie.'" >'.$r->cookie.'</a> , ';
 				}
 			}
-			echo '<br /><b>Defined IPs :</b><br /> ';
+			echo '<br /><b>'.__('Defined IPs :','visitor-analytics').'</b><br /> ';
 			foreach($results_1 as $r){
 				if($r->ip!=''){
-					echo '<a href="'.VA_ADMIN_URL.'&filter=ip&ip='.$r->ip.'"  title="'.$va_lang['title_ip'].'">'.$r->ip.'</a><br/>';
+					echo '<a href="'.VA_ADMIN_URL.'&filter=ip&ip='.$r->ip.'" >'.$r->ip.'</a><br/>';
 				}
 			}
 			echo '</div>';

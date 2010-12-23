@@ -1,6 +1,5 @@
 <?php
 function make_table($results,$results_count,$page_no=1){
-	global $va_lang;
 	$timezone = va_get_timezone();
 	$va_options = get_option('va_options', TRUE);
 	$per_page = $va_options['per_page'];
@@ -11,13 +10,13 @@ function make_table($results,$results_count,$page_no=1){
 	echo '</thead></table>';
 	echo '<table class="widefat" cellspacing="0"><thead>
 		<tr>
-		<th width=20%>'.$va_lang['menu_time'].'</th>
-		<th width=20%>'.$va_lang['menu_url'].'</td>
-		<th width=20%>'.$va_lang['menu_referer'].'</th>
-		<th width=15%>'.$va_lang['menu_ip'].'</td>
-		<th width=25%>'.$va_lang['menu_fingerprint'].'</th>	
-		<th width=5%>'.$va_lang['menu_stalker'].'</th>
-		<th width=5%>'.$va_lang['menu_agent'].'</th>
+		<th width=20%>'.__('Time','visitor-analytics').'</th>
+		<th width=20%>'.__('Url','visitor-analytics').'</td>
+		<th width=20%>'.__('Referer','visitor-analytics').'</th>
+		<th width=15%>'.__('IP','visitor-analytics').'</td>
+		<th width=25%>'.__('Cookie','visitor-analytics').'</th>	
+		<th width=5%>'.__('Name','visitor-analytics').'</th>
+		<th width=5%>'.__('Agent','visitor-analytics').'</th>
 		</tr></thead>';
 	echo '<tbody>';
 	$show_flag = 0;
@@ -38,24 +37,23 @@ function make_table($results,$results_count,$page_no=1){
 		   if(empty($va_options['ip_addr'])) $va_options['ip_addr']='http://images.ziming.org/special_use/ip/?ip=';
 		   $cuva_ip_address= $va_options['ip_addr'].$r->ip;
 		   echo '<td><a title="'.$cuva_ip_address.'" href="'.VA_ADMIN_URL.'&va_filter=ip&va_ip='.$r->ip.'">'.$r->ip.'</a><a href="'.$cuva_ip_address.'" target="_blank" ><img src="'.VA_BASEFOLDER.'img/questionmark-icon.gif"/></a></td>';
-		   echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->cookie.'" title="'.$va_lang['title_cookie'].'">'.$r->cookie.'</a></td>';
+		   echo '<td><a href="'.VA_ADMIN_URL.'&va_filter=fingerprint&va_cookie='.$r->cookie.'" >'.$r->cookie.'</a></td>';
 		   echo '<td>';
 		   switch($r->access){
 		   	case 'y':
-		   		echo '<img src="'.VA_BASEFOLDER.'img/granted.png" title="'.$va_lang['menu_granted'].'"/>';
+		   		echo '<img src="'.VA_BASEFOLDER.'img/granted.png" />';
 		   		break;
 		   	case 'n':
-		   		echo '<img src="'.VA_BASEFOLDER.'img/denied.png" title="'.$va_lang['menu_denied'].'"/>';
+		   		echo '<img src="'.VA_BASEFOLDER.'img/denied.png" />';
 		   		break;
 		   	case 'g':
-				  echo '<img src="'.VA_BASEFOLDER.'img/outmail.png" title="'.$va_lang['menu_access_greet'].'"/>';
+				  echo '<img src="'.VA_BASEFOLDER.'img/outmail.png" />';
 				  break;
 			  case 'g_s':
-				  echo '<img src="'.VA_BASEFOLDER.'img/inmail.png" title="'.$va_lang['menu_access_send'].'"/>';
+				  echo '<img src="'.VA_BASEFOLDER.'img/inmail.png" />';
 				  break;
 		  }
-		  echo '&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=stalkers&va_id='.$r->stalker_id.'&va_name='.urlencode($r->name).'"
-			title="'.$va_lang['title_stalker'].'">'.$r->name.'</a>';
+		  echo '&nbsp;<a href="'.VA_ADMIN_URL.'&va_page=stalkers&va_id='.$r->stalker_id.'&va_name='.urlencode($r->name).'">'.$r->name.'</a>';
 		  if ($r->comment_id > -1){
 			  echo ' <a href="'.$r->referer.'" title="'.strip_tags($r->comment_content).'" target="_blank">
 			  <img src="'.VA_BASEFOLDER.'img/comment-icon.gif"/></a>';
@@ -66,7 +64,7 @@ function make_table($results,$results_count,$page_no=1){
 		  echo '</tr></tbody>';
 	 }
 	}
-  if(ceil($results_count/$per_page)!=0){
+  if(floor($results_count/$per_page)!=0){
 	  echo '<tfoot><tr>';
 	  echo '<th colspan="2"></th><th colspan="1"><a href="'.VA_ADMIN_URL;
 	  if($_GET['va_page']){
@@ -85,7 +83,7 @@ function make_table($results,$results_count,$page_no=1){
 	  			echo '&va_id='.$_GET['va_id'];
 	  }
 	  
-	  echo '&page_no='.((($page_no-1)==0) ? 1 : ($page_no-1)).'" > << PrePage</a></th>';
+	  echo '&page_no='.((($page_no-1)==0) ? 1 : ($page_no-1)).'" > << '. __('PrePage','visitor-analytics').'</a></th>';
 	  echo '<th colspan="1" align="center">Current: '.$page_no.'/'.ceil($results_count/$per_page).'</th>';
 	  echo '<th colspan="1" align="center"><a href="'.VA_ADMIN_URL;
 	  if($_GET['va_page']){
@@ -110,7 +108,7 @@ function make_table($results,$results_count,$page_no=1){
 	  }else{ 
 	  		echo $page_no+1 ;
 	  } 
-	  echo '" >NextPage >></a></th>';
+	  echo '" >'. __('NextPage','visitor-analytics').' >></a></th>';
 	  echo '<th colspan="2"></th></tr></tfoot>';
 	}
 	echo '</table></div>';
@@ -244,7 +242,7 @@ if(!function_exists(is_bot)){
 		if (strlen($agent) < 50){
 			$is_bot = true;
 		}
-		$bots = array('Google Bot' => 'google', 'MSN Bot' => 'msn', 'Baidu Bot' => 'baidu', 'YaHoo Bot' => 'yahoo', 'SoSo Bot' => 'soso', 'Sogou Bot' => 'sogou', 'Spider Bot' => 'spider', 'Bot' => 'bot', 'Search Bot' => 'search', 'Alexa' => 'alexa');
+		$bots = array('Google Bot' => 'google', 'MSN Bot' => 'msn', 'Baidu Bot' => 'baidu', 'YaHoo Bot' => 'yahoo', 'SoSo Bot' => 'soso', 'Sogou Bot' => 'sogou', 'Spider Bot' => 'spider', 'Bot' => 'bot', 'Search Bot' => 'search', 'Alexa' => 'alexa', 'Rss Reader' => 'feed', 'Rss Reader' => 'rss', 'CIBA' => 'ciba');
 		foreach ($bots as $name => $lookfor) { 
 			if (stristr($agent, $lookfor) !== false) { 
 					$is_bot = true;
@@ -406,8 +404,11 @@ function va_get_timezone(){
 	$timezone = get_option('timezone_string');
 	if (empty($timezone)){
 		$x = floor(get_option('gmt_offset'));
-		if ($x>0)
-			$x="+$x";
+		if ($x>0){
+			 $x="-".$x;
+		}else{
+			$x= "+".-$x;
+		}
 		$timezone = "Etc/GMT$x";
 	}
 	return $timezone;
@@ -500,24 +501,24 @@ function va_time_diff($time1, $time2){
 	global $va_lang;
 	$diff = floor($time1 - $time2);
 	if ($diff<1)
-		return $va_lang['timediff_now'];
+		return __('right now','visitor-analytics');
 	if ($diff<60)
-		return $diff.$va_lang['timediff_seconds'];
+		return __('second(s) ago','visitor-analytics');
 	else
 		$diff = floor($diff/60);
 		if ($diff<60)
-			return $diff.$va_lang['timediff_minutes'];
+			return __('minute(s) ago','visitor-analytics');
 		else
 			$diff = floor($diff/60);
 			if ($diff<24)
-				return $diff.$va_lang['timediff_hours'];
+				return __('hour(s) ago','visitor-analytics');
 			else
 				$diff = floor($diff/24);
 				if ($diff<7)
-					return $diff.$va_lang['timediff_days'];
+					return __('day(s) ago','visitor-analytics');
 				else
 					$diff = floor($diff/7);
-					return $diff.$va_lang['timediff_weeks'];
+					return __('week(s) ago','visitor-analytics');
 }
 
 if(!function_exists('cut_str_2')) {
